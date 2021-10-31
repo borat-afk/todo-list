@@ -5,12 +5,13 @@ interface Props {
   bricks: Array<{
     id: number,
     text: string,
+    isConfirmed: boolean,
   }>;
 };
 
 class List extends React.Component<Props>{
   render () {
-    return this.props.bricks.map(brick => <ListItem key={brick.id} data={brick} />)
+    return this.props.bricks.map(todos => <ListItem key={todos.id} data={todos} />)
   }
 }
 

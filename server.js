@@ -4,19 +4,44 @@ const app = express();
 app.use(express.json());
 let idCount = 2;
 
-const bricks = [
+let bricks = [
   {
     id: 1,
-    text: 'First message',
-  },
-  {
-    id: 2,
-    text: 'Second message',
-  },
+    username: 'TestUser',
+    password: 1111,
+    todos: [
+      {
+        id: 1,
+        text: 'First message',
+        isConfirmed: false,
+      },
+      {
+        id: 2,
+        text: 'Second message',
+        isConfirmed: false,
+      },
+    ],
+  }
 ];
 
 app.get('/api/bricks', (req, res) => {
-  res.json(bricks);
+  res.json(bricks[0].todos);
+});
+
+app.put('/api/bricks', (req, res) => {
+  const body = req.body.user;
+  bricks[0].todos.forEach(item => {
+    if (item.id === body.id) {
+      item.isConfirmed = body.isConfirmed
+    }
+    res.json(bricks)
+  })
+});
+
+app.delete('/api/bricks', (req, res) => {
+  const body = req.body;
+  bricks[0].todos.splice(bricks[0].todos.findIndex(item => item.id === body.id), 1)
+  res.json(bricks)
 });
 
 app.post('/api/bricks', (req, res) => {
@@ -25,8 +50,9 @@ app.post('/api/bricks', (req, res) => {
   const newBrick = {
     id: idCount,
     text: body.text,
+    isConfirmed: false,
   }
-  bricks.push(newBrick)
+  bricks[0].todos.push(newBrick)
   res.json(newBrick)
 });
 

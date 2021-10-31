@@ -12,6 +12,7 @@ class Form extends React.Component<Props>{
   onInputChange = (e: React.FocusEvent<HTMLInputElement>) => this
     .setState({[e.target.name]: e.target.value});
   onButtonClick() {
+    console.log('state: ', this.state)
     this.props.addNewBrick(this.state.text);
   }
   render () {
